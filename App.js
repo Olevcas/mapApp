@@ -13,20 +13,6 @@ import { Ionicons } from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator();
 
-const milanRegion = {
-  latitude: 45.464664,
-  longitude: 9.179540,
-  latitudeDelta: 0.2222,
-  longitudeDelta: 0.2221,
-};
-
-const testDistance = getDistance(
-  { latitude: 51.5103, longitude: 7.49347 },
-  { latitude: 51.5103, longitude: 7.39347 }
-);
-
-console.log(testDistance);
-
 export default function App() {
 
 
@@ -37,7 +23,7 @@ export default function App() {
         <Tab.Screen name="Home" component={HomeScreen} options={{
           tabBarIcon: ({ color, size }) => (<Ionicons name="home-outline" size={24} color="black" />)
         }} />
-        <Tab.Screen name="MapPage" component={MapPage} options={{
+        <Tab.Screen name="MapPage - Show places nearby" component={MapPage} options={{
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="md-map-outline" size={24} color="black" />)
         }} />
