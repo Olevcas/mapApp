@@ -4,7 +4,7 @@ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { getDistance, isPointWithinRadius } from 'geolib';
 import Slider from '@react-native-community/slider';
 
-import citiesData from '../it.json';
+import citiesData from '../it3.json';
 
 const milanRegion = {
   latitude: 45.464664,
@@ -26,18 +26,18 @@ export default function App() {
 
 
     const filteredCities = citiesData.filter((city) => {
-      const cityLat = parseFloat(city.lat);
-      const cityLng = parseFloat(city.lng);
+      const cityLat = parseFloat(city.coordinates.lat);
+      const cityLng = parseFloat(city.coordinates.lon);
       return isPointWithinRadius(center, { latitude: cityLat, longitude: cityLng }, radius);
     });
 
     const newMarkers = filteredCities.map((city) => ({
-      key: city.city,
+      key: city.name,
       coordinate: {
-        latitude: parseFloat(city.lat),
-        longitude: parseFloat(city.lng),
+        latitude: parseFloat(city.coordinates.lat),
+        longitude: parseFloat(city.coordinates.lon),
       },
-      title: city.city,
+      title: city.name,
       description: `Population: ${city.population}`,
     }));
 
