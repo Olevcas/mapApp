@@ -1,28 +1,27 @@
 import React from 'react';
 import { View, Text, FlatList, StyleSheet } from 'react-native';
+import { getDistance, isPointWithinRadius } from 'geolib';
+import CityCard from "proximity/components/CityCard.js";
+import { useRoute } from '@react-navigation/native';
 
-import citiesData from '../it.json';
-import { isPointWithinRadius } from 'geolib';
+
 
 const CityList = () => {
+
+    const route = useRoute();
+    const { filteredCities } = route.params;
+
     const renderCityItem = (city) => {
         // Call your function for each city here
-        console.log(`Processing city: ${city.city}`);
-        const cityLng = parseFloat(city.lng);
-        const cityLat = parseFloat(city.lat);
-        const isWithin = isPointWithinRadius({ latitude: 45.464664, longitude: 9.179540 }, { latitude: cityLat, longitude: cityLng }, 100000)
-        if (isWithin) {
-            console.log("City is within radius")
-        }
+        const cityLng = parseFloat(city.coordinates.lon);
+        const cityLat = parseFloat(city.coordinates.lat);
+        const formatter = Intl.NumberFormat("no", { notation: "compact" });
+        const formattedPop = formatter.format(city.population);
+        const dist = getDistance({ latitude: 45.464664, longitude: 9.179540 }, { latitude: cityLat, longitude: cityLng }) / 1000;
 
         return (
-            <View style={styles.cityItem}>
-                <Text style={styles.cityName}>{city.city}</Text>
-                <Text>Population: {city.population}</Text>
-                <Text>Latitude: {city.lat}</Text>
-                <Text>Longitude: {city.lng}</Text>
-                <Text>Admin Name: {city.admin_name}</Text>
-            </View>
+            <CityCard cityName={city.name} population={formattedPop} distance={dist}>
+            </CityCard>
         );
     };
 
@@ -30,11 +29,12 @@ const CityList = () => {
         return renderCityItem(item);
     };
 
+
     return (
         <View style={styles.container}>
-            <Text style={styles.header}>List of Cities</Text>
+            <Text style={styles.header}>List of Cities within: </Text>
             <FlatList
-                data={citiesData}
+                data={filteredCities}
                 renderItem={renderItem}
                 keyExtractor={(item) => item.city}
                 onEndReachedThreshold={0.1} // Adjust as needed
@@ -45,12 +45,16 @@ const CityList = () => {
 
 const styles = StyleSheet.create({
     container: {
-        padding: 20,
+        width: "100%",
+        alignSelf: "center",
+        alignItems: "center"
+
     },
     header: {
         fontSize: 24,
         fontWeight: 'bold',
-        marginBottom: 10,
+        marginBottom: 15,
+        marginTop: 15
     },
     cityItem: {
         marginBottom: 15,

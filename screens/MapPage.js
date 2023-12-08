@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import MapView, { Marker } from 'react-native-maps';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { getDistance, isPointWithinRadius } from 'geolib';
 import Slider from '@react-native-community/slider';
-
 import citiesData from '../it3.json';
+import { useNavigation } from '@react-navigation/native';
+
 
 const milanRegion = {
   latitude: 45.464664,
@@ -12,13 +13,23 @@ const milanRegion = {
   latitudeDelta: 0.2222,
   longitudeDelta: 0.2221,
 };
+let sjekken = "Hei";
 
-export default function App() {
+export default function MapPage() {
+
+  const navigation = useNavigation();
   const [range, setRange] = useState(0);
   const [markers, setMarkers] = useState([]);
   const [isViewVisible, setIsViewVisible] = useState(false);
   const [mainLat, setMainLat] = useState(45.464664);
   const [mainLng, setMainLng] = useState(9.179540);
+  const [minLat, setMinLat] = useState(1000);
+  const [maxLat, setMaxLat] = useState(0);
+  const [minLng, setMinLng] = useState(1000);
+  const [maxLng, setMaxLng] = useState(0);
+  const [newMilanRegion, setNewMilanRegion] = useState(milanRegion);
+  const mapRef = useRef(null);
+
 
   const updateMarkers = (radius) => {
 
@@ -28,6 +39,8 @@ export default function App() {
     const filteredCities = citiesData.filter((city) => {
       const cityLat = parseFloat(city.coordinates.lat);
       const cityLng = parseFloat(city.coordinates.lon);
+
+
       return isPointWithinRadius(center, { latitude: cityLat, longitude: cityLng }, radius);
     });
 
@@ -40,18 +53,65 @@ export default function App() {
       title: city.name,
       description: `Population: ${city.population}`,
     }));
+    //console.log(newMarkers)
+    setMarkers(newMarkers);
+
+    let newMinLat = 1000,
+      newMaxLat = 0,
+      newMinLng = 1000,
+      newMaxLng = 0;
+
+    newMarkers.forEach((marker) => {
+      const { latitude, longitude } = marker.coordinate;
+      newMinLat = Math.min(newMinLat, latitude);
+      newMaxLat = Math.max(newMaxLat, latitude);
+      newMinLng = Math.min(newMinLng, longitude);
+      newMaxLng = Math.max(newMaxLng, longitude);
+    });
+
+    setMinLat(newMinLat);
+    setMaxLat(newMaxLat);
+    setMinLng(newMinLng);
+    setMaxLng(newMaxLng);
 
     setMarkers(newMarkers);
+    return filteredCities;
   };
+
+  useEffect(() => {
+    const updatedRegion = {
+      latitude: minLat + (maxLat - minLat) / 2,
+      longitude: minLng + (maxLng - minLng) / 2,
+      latitudeDelta: maxLat - minLat + (maxLat - minLat) / 4, // Adding a buffer to adjust the view
+      longitudeDelta: maxLng - minLng + (maxLng - minLng) / 4,
+    };
+    setNewMilanRegion(updatedRegion);
+  }, [minLat, maxLat, minLng, maxLng]);
+
+  useEffect(() => {
+    if (mapRef.current) {
+      mapRef.current.animateToRegion(newMilanRegion, 1000); // Adjust the duration as needed
+    }
+  }, [newMilanRegion]);
 
   const handleSliderChange = (value) => {
     setRange(parseInt(value));
   };
 
   const handleConfirmButtonPress = () => {
-    updateMarkers(range * 1000);
+    const filteredCities = updateMarkers(range * 1000);
     setIsViewVisible(false);
-  };
+    const updatedRegion = {
+      latitude: minLat + (maxLat - minLat) / 2,
+      longitude: minLng + (maxLng - minLng) / 2,
+      latitudeDelta: maxLat - minLat + (maxLat - minLat) / 4,
+      longitudeDelta: maxLng - minLng + (maxLng - minLng) / 4,
+    };
+    setNewMilanRegion(updatedRegion);
+
+    // Pass filteredCities to the Profile screen
+    navigation.navigate('Profile', { filteredCities });
+  }
 
   const toggleViewVisibility = () => {
     setIsViewVisible(!isViewVisible);
@@ -62,8 +122,6 @@ export default function App() {
     setMainLat(latitude);
     setMainLng(longitude);
   }
-
-
 
   return (
     <View style={styles.container}>
@@ -76,7 +134,7 @@ export default function App() {
         </View>)}
         <Text onPress={toggleViewVisibility} style={styles.settingsButton}>Show menu</Text>
 
-        <MapView style={styles.map} initialRegion={milanRegion}>
+        <MapView style={styles.map} initialRegion={milanRegion} ref={mapRef}>
           <Marker coordinate={{ latitude: 45.464664, longitude: 9.179540 }} pinColor='blue' draggable onDragEnd={handleMapPress}></Marker>
           {markers.map((marker) => (
             <Marker
@@ -133,8 +191,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 2,
     borderColor: "black",
-    overflow: "hidden"
-
+    overflow: "hidden",
   },
   card: {
     width: "90%",
@@ -151,11 +208,11 @@ const styles = StyleSheet.create({
     gap: 15,
     shadowColor: "#000",
     shadowOffset: {
-      width: 0,
-      height: 6,
+      width: 5,
+      height: 5,
     },
-    shadowOpacity: 0.37,
-    shadowRadius: 7.49,
+    shadowOpacity: 0.77,
+    shadowRadius: 12.49,
 
     elevation: 12,
   },

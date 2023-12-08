@@ -2,27 +2,25 @@ import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 
 
-class Box extends React.Component {
-    render() {
-        return (
+function Box(props) {
 
-            <View style={style.mapbox}></View>
+    const height = props.height;
 
-        );
-    }
+    const style = StyleSheet.create({
+        mapbox: {
+            width: '80%',
+            height: height,
+            borderRadius: 5,
+            borderWidth: 2,
+            borderColor: '#000',
+            backgroundColor: "white",
+        }
+
+    });
+
+    return (
+        <View style={style.mapbox}></View>
+    )
 }
 export default Box;
 
-const style = StyleSheet.create({
-    mapbox: {
-        width: '80%',
-        height: '70%',
-        borderRadius: 10,
-        borderWidth: 4,
-        borderColor: '#000',
-        justifyContent: "center",
-        backgroundColor: "lightgreen",
-        overflow: 'hidden'
-    }
-
-});

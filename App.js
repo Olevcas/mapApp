@@ -20,10 +20,10 @@ export default function App() {
 
     <NavigationContainer>
       <Tab.Navigator>
-        <Tab.Screen name="Home" component={HomeScreen} options={{
+        <Tab.Screen name="Proximity" component={HomeScreen} options={{
           tabBarIcon: ({ color, size }) => (<Ionicons name="home-outline" size={24} color="black" />)
         }} />
-        <Tab.Screen name="MapPage - Show places nearby" component={MapPage} options={{
+        <Tab.Screen name="Map page" component={MapPage} options={{
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="md-map-outline" size={24} color="black" />)
         }} />
