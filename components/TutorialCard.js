@@ -37,5 +37,6 @@ const styles = StyleSheet.create({
     },
     numberText: {
         fontSize: 40,
+        color: "white"
     }
 });

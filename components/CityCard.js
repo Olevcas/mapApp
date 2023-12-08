@@ -28,23 +28,24 @@ export default CityCard;
 const style = StyleSheet.create({
     cardbox: {
         width: "100%",
-        borderRadius: 5,
-        borderWidth: 3,
-        borderColor: '#000',
         justifyContent: "center",
         overflow: 'hidden',
         padding: 15,
         gap: 15,
         elevation: 12,
         backgroundColor: "white",
-        marginBottom: 20
+        marginBottom: 20,
+        borderRadius: 8
     },
     texts: {
         fontSize: 20,
         fontWeight: "bold",
+        color: "#2b2b2b"
+
     },
     container: {
         width: "100%",
+        opacity: 0.8,
         /*shadowColor: "black",
         shadowOffset: {
             width: 5,
@@ -57,8 +58,9 @@ const style = StyleSheet.create({
         alignItems: "center",
     },
     header: {
-        fontSize: 20,
-        fontWeight: "bold"
+        fontSize: 30,
+        fontWeight: "bold",
+        color: "#2b2b2b"
     }
 
 });

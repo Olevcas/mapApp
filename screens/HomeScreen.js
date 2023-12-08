@@ -19,7 +19,7 @@ export default function HomeScreen() {
                     <Text style={styles.header}> Welcome to proximity </Text>
 
                     <View style={styles.tutBox}>
-                        <Text style={styles.tutText}>Below you will find a tutorial</Text>
+                        <Text style={styles.tutText}>Below you will find a quick tutorial</Text>
                     </View>
 
                     <TutorialCard number="1"></TutorialCard>
@@ -46,7 +46,10 @@ const styles = StyleSheet.create({
 
     },
     header: {
-        fontSize: 35,
+        fontSize: 40,
+        fontFamily: "Impact",
+        color: "white",
+        marginBottom: -10
     },
     container: {
         padding: 20,
@@ -55,22 +58,16 @@ const styles = StyleSheet.create({
         gap: 20,
 
     },
-    text: {
-        fontSize: 30,
-        fontWeight: "bold",
-        color: "white",
-        opacity: 0.7
-    },
     tutText: {
         fontSize: 20,
         textAlign: "center",
+        color: "white",
+        fontWeight: "bold"
     },
     tutBox: {
         width: "100%",
-        backgroundColor: "white",
-        padding: 10,
+        padding: 0,
         borderRadius: 8,
-        opacity: 0.8
     }
 });
 

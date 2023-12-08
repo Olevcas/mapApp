@@ -1,8 +1,10 @@
 import React from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
+import { View, Text, FlatList, StyleSheet, ImageBackground } from 'react-native';
 import { getDistance, isPointWithinRadius } from 'geolib';
 import CityCard from "proximity/components/CityCard.js";
 import { useRoute } from '@react-navigation/native';
+import GIF from 'proximity/images/foss.gif'; // Make sure this path is correct
+
 
 
 
@@ -31,19 +33,28 @@ const CityList = () => {
 
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.header}>List of Cities within: </Text>
-            <FlatList
-                data={filteredCities}
-                renderItem={renderItem}
-                keyExtractor={(item) => item.city}
-                onEndReachedThreshold={0.1} // Adjust as needed
-            />
-        </View>
+        <ImageBackground source={GIF} style={{ width: "100%", height: "100%" }}>
+            <View style={styles.container}>
+                <Text style={styles.header}>List of Cities </Text>
+                <FlatList
+                    style={styles.flat}
+                    data={filteredCities}
+                    renderItem={renderItem}
+                    keyExtractor={(item) => item.city}
+                    onEndReachedThreshold={0.1} // Adjust as needed
+                />
+            </View>
+        </ImageBackground>
     );
 };
 
 const styles = StyleSheet.create({
+    flat: {
+        width: "100%",
+        paddingLeft: "10%",
+        paddingRight: "10%",
+        paddingBottom: "5%"
+    },
     container: {
         width: "100%",
         alignSelf: "center",
@@ -51,10 +62,11 @@ const styles = StyleSheet.create({
 
     },
     header: {
-        fontSize: 24,
+        fontSize: 45,
         fontWeight: 'bold',
         marginBottom: 15,
-        marginTop: 15
+        marginTop: 15,
+        color: "white"
     },
     cityItem: {
         marginBottom: 15,
