@@ -1,46 +1,41 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, ScrollView } from 'react-native';
 
 
 function TutorialCard(props) {
 
-    const cityName = props.cityName;
-    const population = props.population;
-    const distance = props.distance;
     const number = props.number;
 
     return (
-
-        <View style={style.container}>
-            <Text style={style.numberBox}>  {number}</Text>
+        <View style={styles.container}>
+            <View style={styles.numberBox}>
+                <Text style={styles.numberText}>{number}</Text>
+            </View>
         </View>
-
     );
 }
 
 export default TutorialCard;
 
-const style = StyleSheet.create({
-    container: {
-        width: "90%",
-        height: "30%",
-        backgroundColor: "white"
-        /*shadowColor: "black",
-        shadowOffset: {
-            width: 5,
-            height: 5,
-        },
-        shadowOpacity: 0.5,
-        shadowRadius: 6.49,
+const styles = StyleSheet.create({
 
-        elevation: 12, */
+    container: {
+        width: "100%",
+        height: 250,
+        backgroundColor: "white",
+        opacity: 0.8,
+        borderRadius: 8,
+        padding: 5,
     },
     numberBox: {
-        position: "relative",
-        width: 80,
-        height: 80,
-        backgroundColor: "yellow",
-        fontSize: 60,
+        width: 60,
+        height: 60,
+        backgroundColor: "seagreen",
+        borderRadius: 8,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    numberText: {
+        fontSize: 40,
     }
-
 });
