@@ -57,7 +57,7 @@ function ExtendedCityCard({ cityName, cityLat, cityLng, wikipediaPage, onClose }
                 <Image
                     style={{
                         width: '100%',
-                        height: 400
+                        height: 200
                     }}
                     source={{ uri: imageUrl }}
                 />
@@ -165,8 +165,8 @@ const style = StyleSheet.create({
 
     // Additional styles for the extended card
     extendedCardContainer: {
-        width: '80%', // Adjust this to the desired width for extended cards
-        height: '85%', // Adjust this to the desired height for extended cards
+        width: '85%', // Adjust this to the desired width for extended cards
+        height: '70%', // Adjust this to the desired height for extended cards
         justifyContent: 'flex-start',
         alignItems: 'center',
         backgroundColor: 'white',
@@ -202,7 +202,7 @@ const style = StyleSheet.create({
         marginTop: 20,
     },
     extendedMap: {
-        width: '50%',
+        width: '60%',
         height: '30%',
         position: 'relative',
         zIndex: 10,
