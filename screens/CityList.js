@@ -21,7 +21,7 @@ const CityList = () => {
         const dist = getDistance({ latitude: 45.464664, longitude: 9.179540 }, { latitude: cityLat, longitude: cityLng }) / 1000;
 
         return (
-            <CityCard cityName={city.name} population={formattedPop} distance={dist}>
+            <CityCard cityName={city.name} population={formattedPop} distance={dist} cityLat={cityLat} cityLng={cityLng}>
             </CityCard>
         );
     };
