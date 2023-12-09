@@ -5,6 +5,7 @@ import { getDistance, isPointWithinRadius } from 'geolib';
 import Slider from '@react-native-community/slider';
 import citiesData from '../it3.json';
 import { useNavigation } from '@react-navigation/native';
+import { useCities } from "proximity/Contexts/CitiesContext.js";
 
 
 const milanRegion = {
@@ -13,11 +14,10 @@ const milanRegion = {
   latitudeDelta: 0.2222,
   longitudeDelta: 0.2221,
 };
-let sjekken = "Hei";
 
 export default function MapPage() {
 
-  const navigation = useNavigation();
+  const { setFilteredCities } = useCities();
   const [range, setRange] = useState(0);
   const [markers, setMarkers] = useState([]);
   const [isViewVisible, setIsViewVisible] = useState(false);
@@ -108,9 +108,7 @@ export default function MapPage() {
       longitudeDelta: maxLng - minLng + (maxLng - minLng) / 4,
     };
     setNewMilanRegion(updatedRegion);
-
-    // Pass filteredCities to the Profile screen
-    navigation.navigate('Profile', { filteredCities });
+    setFilteredCities(filteredCities);
   }
 
   const toggleViewVisibility = () => {
@@ -130,7 +128,7 @@ export default function MapPage() {
           <Text style={{ fontSize: 20 }}>Choose your distance</Text>
           <Slider onValueChange={handleSliderChange} style={{ width: '90%', height: 60 }} minimumValue={0} maximumValue={1250} step={20} value={range} minimumTrackTintColor="white" maximumTrackTintColor="white" />
           <Text style={{ fontSize: 20, fontWeight: "bold" }}>{range + " km"}</Text>
-          <Text style={styles.confirmButton} onPress={handleConfirmButtonPress}>Confirm distance</Text>
+          <Text style={styles.confirmButton} onPress={handleConfirmButtonPress}>Confirm radius</Text>
         </View>)}
         <Text onPress={toggleViewVisibility} style={styles.settingsButton}>Show menu</Text>
 

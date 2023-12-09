@@ -14,24 +14,26 @@ export default function HomeScreen() {
     return (
         <ImageBackground source={GIF} style={{ width: "100%", height: "100%" }}>
 
-            <ScrollView style={styles.scroll}>
-                <View style={styles.container}>
-                    <Text style={styles.header}> Welcome to proximity </Text>
 
-                    <View style={styles.tutBox}>
-                        <Text style={styles.tutText}>Below you will find a quick tutorial</Text>
-                    </View>
+            <View style={styles.container}>
+                <Text style={styles.header}> Welcome to proximity </Text>
 
-                    <TutorialCard number="1"></TutorialCard>
-                    <TutorialCard number="2"></TutorialCard>
-                    <TutorialCard number="3"></TutorialCard>
-                    <TutorialCard number="4"></TutorialCard>
-
-
-
-
+                <View style={styles.tutBox}>
+                    <Text style={styles.tutText}>Below you will find a quick tutorial</Text>
                 </View>
-            </ScrollView>
+
+                <ScrollView style={styles.scroll}>
+
+                    <TutorialCard number="1" header="Navigate to the Map page to start filtering cities:"></TutorialCard>
+                    <TutorialCard number="2" header="Press the 'Show menu' button and set a radius:"></TutorialCard>
+                    <TutorialCard number="3" header="Confirm the radius, and let the map show the relevant cities!"></TutorialCard>
+                    <TutorialCard number="4" header="To get a list view of the cities, head over to the City List page:"></TutorialCard>
+
+                </ScrollView>
+
+
+            </View>
+
 
         </ImageBackground>
 
@@ -43,7 +45,8 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
     scroll: {
         width: "100%",
-
+        paddingHorizontal: 20,
+        marginTop: -10
     },
     header: {
         fontSize: 40,
@@ -52,7 +55,8 @@ const styles = StyleSheet.create({
         marginBottom: -10
     },
     container: {
-        padding: 20,
+        marginTop: "10%",
+        paddingTop: 10,
         flex: 1,
         alignItems: "center",
         gap: 20,

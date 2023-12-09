@@ -4,17 +4,16 @@ import { getDistance, isPointWithinRadius } from 'geolib';
 import CityCard from "proximity/components/CityCard.js";
 import { useRoute } from '@react-navigation/native';
 import GIF from 'proximity/images/foss.gif'; // Make sure this path is correct
+import { useCities } from "proximity/Contexts/CitiesContext.js";
 
 
 
 
 const CityList = () => {
 
-    const route = useRoute();
-    const { filteredCities } = route.params;
+    const { filteredCities } = useCities();
 
     const renderCityItem = (city) => {
-        // Call your function for each city here
         const cityLng = parseFloat(city.coordinates.lon);
         const cityLat = parseFloat(city.coordinates.lat);
         const formatter = Intl.NumberFormat("no", { notation: "compact" });
@@ -58,7 +57,9 @@ const styles = StyleSheet.create({
     container: {
         width: "100%",
         alignSelf: "center",
-        alignItems: "center"
+        alignItems: "center",
+        marginBottom: "20%",
+        marginTop: "10%"
 
     },
     header: {
