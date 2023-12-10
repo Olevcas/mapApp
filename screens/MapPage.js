@@ -7,6 +7,8 @@ import citiesData from '../it3.json';
 import { useNavigation } from '@react-navigation/native';
 import { useCities } from "proximity/Contexts/CitiesContext.js";
 import SettingsCard from "proximity/components/SettingsCard.js"
+import { Audio } from 'expo-av';
+import ExtendedCityCard from '../components/ExtendedCityCard';
 
 
 const milanRegion = {
@@ -18,10 +20,12 @@ const milanRegion = {
 
 export default function MapPage() {
 
+
   const { setFilteredCities } = useCities();
   const [range, setRange] = useState(0);
   const [markers, setMarkers] = useState([]);
   const [isViewVisible, setIsViewVisible] = useState(false);
+  const [isExtendedVisible, setIsExtendedVisible] = useState(false);
   const [mainLat, setMainLat] = useState(45.464664);
   const [mainLng, setMainLng] = useState(9.179540);
   const [minLat, setMinLat] = useState(1000);
@@ -30,6 +34,29 @@ export default function MapPage() {
   const [maxLng, setMaxLng] = useState(0);
   const [newMilanRegion, setNewMilanRegion] = useState(milanRegion);
   const mapRef = useRef(null);
+  const [selectedMarker, setSelectedMarker] = useState(null);
+
+
+  // For sound
+  const [sound, setSound] = React.useState();
+  async function playSound() {
+    console.log('Loading Sound');
+    const { sound } = await Audio.Sound.createAsync(require('proximity/music/damn.mp3')
+    );
+    setSound(sound);
+
+    console.log('Playing Sound');
+    await sound.playAsync();
+  }
+
+  React.useEffect(() => {
+    return sound
+      ? () => {
+        console.log('Unloading Sound');
+        sound.unloadAsync();
+      }
+      : undefined;
+  }, [sound]);
 
 
   const updateMarkers = (radius) => {
@@ -99,6 +126,7 @@ export default function MapPage() {
   };
 
   const handleConfirmButtonPress = () => {
+    playSound();    // adds sound to the button
     const filteredCities = updateMarkers(range * 1000);
     setIsViewVisible(false);
     const updatedRegion = {
@@ -120,31 +148,41 @@ export default function MapPage() {
     setMainLat(latitude);
     setMainLng(longitude);
   }
+  const toggleExtended = (marker) => {
+    setSelectedMarker(marker);
+    setIsExtendedVisible(true);
+  }
 
 
   return (
     <View style={styles.container}>
       <View style={styles.mapbox}>
+        {isExtendedVisible && (<ExtendedCityCard cityName={selectedMarker.title}
+          cityLat={selectedMarker.coordinate.latitude}
+          cityLng={selectedMarker.coordinate.longitude}
+          wikipediaPage={'https://en.wikipedia.org/wiki/' + selectedMarker.title + ''} onClose={() => setIsExtendedVisible(false)}></ExtendedCityCard>)}
         {isViewVisible && (<SettingsCard updateRange={(value) => setRange(value)} handleConfirmButtonPress={handleConfirmButtonPress}></SettingsCard>)}
         <TouchableOpacity style={styles.settingsButton} onPress={toggleViewVisibility}><Text style={styles.buttonText}>Show menu</Text></TouchableOpacity>
-
         <MapView style={styles.map} initialRegion={milanRegion} ref={mapRef}>
           <Marker coordinate={{ latitude: 45.464664, longitude: 9.179540 }} pinColor='blue' draggable onDragEnd={handleMapPress} />
           {markers.map((marker) => (
-            <Marker
-              key={marker.key}
-              coordinate={marker.coordinate}
-            >
-              <Callout>
-                <View>
-                  <Text>{marker.title}</Text>
-                  <Text>{marker.description}</Text>
-                  <TouchableOpacity >
-                    <Text >More Info</Text>
-                  </TouchableOpacity>
-                </View>
-              </Callout>
-            </Marker>
+            <>
+              <Marker
+                key={marker.key}
+                coordinate={marker.coordinate}
+              >
+                <Callout>
+                  <View>
+                    <Text>{marker.title}</Text>
+                    <Text>{marker.description}</Text>
+                    <TouchableOpacity onPress={() => toggleExtended(marker)} >
+                      <Text >More Info</Text>
+                    </TouchableOpacity>
+                  </View>
+                </Callout>
+              </Marker>
+            </>
+
           ))}
         </MapView>
       </View>
