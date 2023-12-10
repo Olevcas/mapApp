@@ -18,10 +18,10 @@ function SettingsCard(props) {
     return (
 
         <View style={styles.card}>
-            <Text style={{ fontSize: 20 }}>Choose your distance</Text>
-            <Slider onValueChange={handleSliderChange} style={{ width: '90%', height: 60 }} minimumValue={0} maximumValue={1250} step={20} value={range} minimumTrackTintColor="white" maximumTrackTintColor="white" />
-            <Text style={{ fontSize: 20, fontWeight: "bold" }}>{range + " km"}</Text>
-            <Text style={styles.confirmButton} onPress={handleConfirmButtonPress}>Confirm radius</Text>
+            <Text style={{ fontSize: 25, fontWeight: "bold", color: "#2b2b2b", opacity: 0.95 }}>Choose your radius</Text>
+            <Slider onValueChange={handleSliderChange} style={{ width: '90%', height: 60 }} minimumValue={0} maximumValue={1250} step={20} value={range} minimumTrackTintColor="seagreen" maximumTrackTintColor="seagreen" />
+            <Text style={{ fontSize: 25, fontWeight: "bold", marginTop: "-2%", marginBottom: "2%", color: "#2b2b2b", opacity: 0.95 }}>{range + " km"}</Text>
+            <TouchableOpacity style={styles.confirmButton} onPress={handleConfirmButtonPress} ><Text style={styles.confirmText}>Confirm radius</Text></TouchableOpacity>
         </View>
 
     )
@@ -29,45 +29,37 @@ function SettingsCard(props) {
 export default SettingsCard;
 
 const styles = StyleSheet.create({
-    sliderbox: {
-        backgroundColor: "red",
-        width: "100%",
-        height: "60%"
-    },
-
     card: {
         width: "90%",
-        backgroundColor: "lightblue",
+        backgroundColor: 'rgba(255, 255, 255, 0.9)',
         position: "absolute",
         borderRadius: 15,
         zIndex: 100,
         alignSelf: 'center',
-        top: "30%",
-        opacity: 1,
+        top: "40%",
         alignItems: 'center',
         justifyContent: "center",
-        padding: 10,
+        paddingVertical: 25,
         gap: 15,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 5,
-            height: 5,
-        },
-        shadowOpacity: 0.77,
-        shadowRadius: 12.49,
-
-        elevation: 12,
     },
     confirmButton: {
         fontSize: 20,
         alignItems: 'center',
-        textAlign: "center",
         borderRadius: 5,
         borderWidth: 2,
-        borderColor: "white",
-        backgroundColor: "white",
+        borderColor: "seagreen",
+        backgroundColor: "seagreen",
         padding: 3,
-        overflow: "hidden"
+        overflow: "hidden",
+        width: "50%",
+        height: "25%",
+        alignItems: "center",
+        justifyContent: "center"
+
+    },
+    confirmText: {
+        color: "white",
+        fontSize: 25
     }
 });
 

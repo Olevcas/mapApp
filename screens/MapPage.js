@@ -126,7 +126,7 @@ export default function MapPage() {
     <View style={styles.container}>
       <View style={styles.mapbox}>
         {isViewVisible && (<SettingsCard updateRange={(value) => setRange(value)} handleConfirmButtonPress={handleConfirmButtonPress}></SettingsCard>)}
-        <Text onPress={toggleViewVisibility} style={styles.settingsButton}>Show menu</Text>
+        <TouchableOpacity style={styles.settingsButton} onPress={toggleViewVisibility}><Text style={styles.buttonText}>Show menu</Text></TouchableOpacity>
 
         <MapView style={styles.map} initialRegion={milanRegion} ref={mapRef}>
           <Marker coordinate={{ latitude: 45.464664, longitude: 9.179540 }} pinColor='blue' draggable onDragEnd={handleMapPress}></Marker>
@@ -174,18 +174,24 @@ const styles = StyleSheet.create({
   },
   settingsButton: {
     position: "absolute",
-    zIndex: 200,
-    backgroundColor: 'lightblue',
-    width: 60, // Adjust the width as needed
-    padding: 10,
-    bottom: 10, // Adjust the top position as needed
-    right: 10, // Adjust the right position as needed
+    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    width: 70,
+    height: 70,
+    bottom: 9,
+    right: 9,
+    paddingLeft: 3,
     alignItems: 'center',
-    textAlign: "center",
-    borderRadius: 10,
-    borderWidth: 2,
-    borderColor: "black",
+    justifyContent: "center",
+    borderRadius: 8,
+    borderWidth: 3,
+    borderColor: "seagreen",
     overflow: "hidden",
+    textAlign: "center",
+
+  },
+  buttonText: {
+    color: "seagreen",
+    fontWeight: "bold"
   },
   card: {
     width: "90%",
