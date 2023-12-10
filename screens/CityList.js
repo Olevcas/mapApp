@@ -141,22 +141,36 @@ const styles = StyleSheet.create({
     sortButton: {
         flex: 1,
         height: "100%",
-        backgroundColor: 'rgba(255, 255, 255, 0.2)',
         padding: 10,
         borderRadius: 5,
         alignItems: 'center',
         justifyContent: 'center',
         padding: 0,
+        backgroundColor: 'rgba(255, 255, 255, 0.6)',
+
 
     },
     buttonText: {
         fontSize: 14,
         fontWeight: 'bold',
-        color: 'white',
+        color: 'black',
         textAlign: 'center',
+        opacity: 0.6
     },
     activeSortButton: {
-        backgroundColor: 'rgba(255, 255, 255, 0.6)', // Change color for active button
+        width: "110%",
+        height: "110%",
+        borderWidth: 2,
+        borderColor: "white",
+        backgroundColor: 'rgba(255, 255, 255, 0.5)',
+        shadowColor: 'white',
+        shadowOffset: {
+            width: 0,
+            height: 0,
+        },
+        shadowOpacity: 0.9,
+        shadowRadius: 2,
+
     },
     searchInput: {
         height: "100%",
