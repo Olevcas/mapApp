@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, FlatList, StyleSheet, ImageBackground, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, StyleSheet, ImageBackground, TouchableOpacity, TextInput } from 'react-native';
 import { getDistance, isPointWithinRadius } from 'geolib';
 import CityCard from "proximity/components/CityCard.js";
 import { useRoute } from '@react-navigation/native';
@@ -16,6 +16,7 @@ const CityList = () => {
     const { filteredCities } = useCities();
     const [isExtendedCardVisible, setIsExtendedCardVisible] = useState(false);
     const [sortBy, setSortBy] = useState('distance'); // 'distance' or 'population'
+    const [searchInput, setSearchInput] = useState('');
 
     const toggleExtendedCard = () => {
         setIsExtendedCardVisible(!isExtendedCardVisible);
@@ -48,19 +49,21 @@ const CityList = () => {
         return renderCityItem(item);
     };
 
-    const sortedCities = filteredCities.sort((cityA, cityB) => {
-        if (sortBy === 'distance') {
-            // Sort by distance
-            const coordsA = cityA.coordinates;
-            const coordsB = cityB.coordinates;
-            const distanceA = getDistance({ latitude: 45.464664, longitude: 9.179540 }, { latitude: parseFloat(coordsA.lat), longitude: parseFloat(coordsA.lon) });
-            const distanceB = getDistance({ latitude: 45.464664, longitude: 9.179540 }, { latitude: parseFloat(coordsB.lat), longitude: parseFloat(coordsB.lon) });
-            return distanceA - distanceB;
-        } else {
-            // Sort by population
-            return cityB.population - cityA.population;
-        }
-    });
+    const sortedCities = filteredCities
+        .filter(city => city.name.toLowerCase().includes(searchInput.toLowerCase()))
+        .sort((cityA, cityB) => {
+            if (sortBy === 'distance') {
+                // Sort by distance
+                const coordsA = cityA.coordinates;
+                const coordsB = cityB.coordinates;
+                const distanceA = getDistance({ latitude: 45.464664, longitude: 9.179540 }, { latitude: parseFloat(coordsA.lat), longitude: parseFloat(coordsA.lon) });
+                const distanceB = getDistance({ latitude: 45.464664, longitude: 9.179540 }, { latitude: parseFloat(coordsB.lat), longitude: parseFloat(coordsB.lon) });
+                return distanceA - distanceB;
+            } else {
+                // Sort by population
+                return cityB.population - cityA.population;
+            }
+        });
 
     return (
         <ImageBackground source={GIF} style={{ width: "100%", height: "100%" }}>
@@ -68,12 +71,19 @@ const CityList = () => {
                 <Text style={styles.header}>List of Cities </Text>
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity onPress={setSortByDistance} style={[styles.sortButton, sortBy === 'distance' && styles.activeSortButton]}>
-                        <Text style={styles.buttonText}>Sort by Distance</Text>
+                        <Text style={styles.buttonText}>Sort by distance</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={setSortByPopulation} style={[styles.sortButton, sortBy === 'population' && styles.activeSortButton]}>
-                        <Text style={styles.buttonText}>Sort by Population</Text>
+                        <Text style={styles.buttonText}>Sort by population</Text>
                     </TouchableOpacity>
+                    <TextInput
+                        style={styles.searchInput}
+                        placeholder="Search by name"
+                        value={searchInput}
+                        onChangeText={setSearchInput}
+                    />
                 </View>
+
                 <FlatList
                     style={styles.flat}
                     data={sortedCities}
@@ -98,10 +108,10 @@ const styles = StyleSheet.create({
         width: "100%",
         alignSelf: "center",
         alignItems: "center",
-        marginBottom: "20%",
-        marginTop: "9%",
+        marginBottom: "18%",
+        marginTop: "7%",
         height: "100%",
-        paddingBottom: "10%",
+        paddingBottom: "7%",
 
 
     },
@@ -125,7 +135,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         marginBottom: 20,
         paddingHorizontal: "4%",
-        height: "5%",
+        height: "6%",
+        gap: 10,
     },
     sortButton: {
         flex: 1,
@@ -133,18 +144,27 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(255, 255, 255, 0.2)',
         padding: 10,
         borderRadius: 5,
-        marginHorizontal: 5,
         alignItems: 'center',
         justifyContent: 'center',
         padding: 0,
+
     },
     buttonText: {
-        fontSize: 16,
+        fontSize: 14,
         fontWeight: 'bold',
         color: 'white',
+        textAlign: 'center',
     },
     activeSortButton: {
         backgroundColor: 'rgba(255, 255, 255, 0.6)', // Change color for active button
+    },
+    searchInput: {
+        height: "100%",
+        paddingHorizontal: 10,
+        borderRadius: 10,
+        backgroundColor: 'rgba(255, 255, 255, 1)',
+        width: "45%",
+
     },
 });
 
