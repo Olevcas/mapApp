@@ -1,9 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text, ImageBackground, ScrollView, Image } from 'react-native';
-import Box from "proximity/components/Box.js";
 import TutorialCard from '../components/TutorialCard';
 import GIF from 'proximity/images/foss.gif'; // Make sure this path is correct
-import logo from "proximity/images/proxiLogo.png";
 import logo2 from "proximity/images/prox.png";
 
 
