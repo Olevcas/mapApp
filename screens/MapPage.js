@@ -6,6 +6,7 @@ import Slider from '@react-native-community/slider';
 import citiesData from '../it3.json';
 import { useNavigation } from '@react-navigation/native';
 import { useCities } from "proximity/Contexts/CitiesContext.js";
+import SettingsCard from "proximity/components/SettingsCard.js"
 
 
 const milanRegion = {
@@ -124,12 +125,7 @@ export default function MapPage() {
   return (
     <View style={styles.container}>
       <View style={styles.mapbox}>
-        {isViewVisible && (<View style={styles.card}>
-          <Text style={{ fontSize: 20 }}>Choose your distance</Text>
-          <Slider onValueChange={handleSliderChange} style={{ width: '90%', height: 60 }} minimumValue={0} maximumValue={1250} step={20} value={range} minimumTrackTintColor="white" maximumTrackTintColor="white" />
-          <Text style={{ fontSize: 20, fontWeight: "bold" }}>{range + " km"}</Text>
-          <Text style={styles.confirmButton} onPress={handleConfirmButtonPress}>Confirm radius</Text>
-        </View>)}
+        {isViewVisible && (<SettingsCard updateRange={(value) => setRange(value)} handleConfirmButtonPress={handleConfirmButtonPress}></SettingsCard>)}
         <Text onPress={toggleViewVisibility} style={styles.settingsButton}>Show menu</Text>
 
         <MapView style={styles.map} initialRegion={milanRegion} ref={mapRef}>

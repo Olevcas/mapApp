@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, FlatList, StyleSheet, ImageBackground } from 'react-native';
 import { getDistance, isPointWithinRadius } from 'geolib';
 import CityCard from "proximity/components/CityCard.js";
 import { useRoute } from '@react-navigation/native';
 import GIF from 'proximity/images/foss.gif'; // Make sure this path is correct
 import { useCities } from "proximity/Contexts/CitiesContext.js";
+import { BlurView } from "expo-blur";
+import ExtendedCityCard from '../components/ExtendedCityCard';
 
 
 
@@ -12,6 +14,11 @@ import { useCities } from "proximity/Contexts/CitiesContext.js";
 const CityList = () => {
 
     const { filteredCities } = useCities();
+    const [isExtendedCardVisible, setIsExtendedCardVisible] = useState(false);
+
+    const toggleExtendedCard = () => {
+        setIsExtendedCardVisible(!isExtendedCardVisible);
+    };
 
     const renderCityItem = (city) => {
         const cityLng = parseFloat(city.coordinates.lon);
@@ -21,8 +28,10 @@ const CityList = () => {
         const dist = getDistance({ latitude: 45.464664, longitude: 9.179540 }, { latitude: cityLat, longitude: cityLng }) / 1000;
 
         return (
-            <CityCard cityName={city.name} population={formattedPop} distance={dist} cityLat={cityLat} cityLng={cityLng}>
+
+            <CityCard onToggleExtendedCard={toggleExtendedCard} cityName={city.name} population={formattedPop} distance={dist} cityLat={cityLat} cityLng={cityLng}>
             </CityCard>
+
         );
     };
 
@@ -30,16 +39,16 @@ const CityList = () => {
         return renderCityItem(item);
     };
 
-
     return (
         <ImageBackground source={GIF} style={{ width: "100%", height: "100%" }}>
+
             <View style={styles.container}>
                 <Text style={styles.header}>List of Cities </Text>
                 <FlatList
                     style={styles.flat}
                     data={filteredCities}
                     renderItem={renderItem}
-                    keyExtractor={(item) => item.city}
+                    keyExtractor={(item) => item.coordinates.lat}
                     onEndReachedThreshold={0.1} // Adjust as needed
                 />
             </View>
