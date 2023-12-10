@@ -2,14 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, FlatList, StyleSheet, ImageBackground, TouchableOpacity, TextInput } from 'react-native';
 import { getDistance, isPointWithinRadius } from 'geolib';
 import CityCard from "proximity/components/CityCard.js";
-import { useRoute } from '@react-navigation/native';
 import GIF from 'proximity/images/foss.gif'; // Make sure this path is correct
 import { useCities } from "proximity/Contexts/CitiesContext.js";
-import { BlurView } from "expo-blur";
-import ExtendedCityCard from '../components/ExtendedCityCard';
-
-
-
 
 const CityList = () => {
 
