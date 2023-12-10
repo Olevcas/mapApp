@@ -73,7 +73,7 @@ const style = StyleSheet.create({
         elevation: 12,
         backgroundColor: "white",
         marginBottom: 20,
-        borderRadius: 8
+        borderRadius: 8,
     },
     texts: {
         fontSize: 20,

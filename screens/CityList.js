@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, FlatList, StyleSheet, ImageBackground } from 'react-native';
+import { View, Text, FlatList, StyleSheet, ImageBackground, TouchableOpacity, TextInput } from 'react-native';
 import { getDistance, isPointWithinRadius } from 'geolib';
 import CityCard from "proximity/components/CityCard.js";
 import { useRoute } from '@react-navigation/native';
@@ -15,9 +15,19 @@ const CityList = () => {
 
     const { filteredCities } = useCities();
     const [isExtendedCardVisible, setIsExtendedCardVisible] = useState(false);
+    const [sortBy, setSortBy] = useState('distance'); // 'distance' or 'population'
+    const [searchInput, setSearchInput] = useState('');
 
     const toggleExtendedCard = () => {
         setIsExtendedCardVisible(!isExtendedCardVisible);
+    };
+
+    const setSortByDistance = () => {
+        setSortBy('distance');
+    };
+
+    const setSortByPopulation = () => {
+        setSortBy('population');
     };
 
     const renderCityItem = (city) => {
@@ -39,21 +49,52 @@ const CityList = () => {
         return renderCityItem(item);
     };
 
+    const sortedCities = filteredCities
+        .filter(city => city.name.toLowerCase().includes(searchInput.toLowerCase()))
+        .sort((cityA, cityB) => {
+            if (sortBy === 'distance') {
+                // Sort by distance
+                const coordsA = cityA.coordinates;
+                const coordsB = cityB.coordinates;
+                const distanceA = getDistance({ latitude: 45.464664, longitude: 9.179540 }, { latitude: parseFloat(coordsA.lat), longitude: parseFloat(coordsA.lon) });
+                const distanceB = getDistance({ latitude: 45.464664, longitude: 9.179540 }, { latitude: parseFloat(coordsB.lat), longitude: parseFloat(coordsB.lon) });
+                return distanceA - distanceB;
+            } else {
+                // Sort by population
+                return cityB.population - cityA.population;
+            }
+        });
+
     return (
         <ImageBackground source={GIF} style={{ width: "100%", height: "100%" }}>
-
             <View style={styles.container}>
                 <Text style={styles.header}>List of Cities </Text>
+                <View style={styles.buttonContainer}>
+                    <TouchableOpacity onPress={setSortByDistance} style={[styles.sortButton, sortBy === 'distance' && styles.activeSortButton]}>
+                        <Text style={styles.buttonText}>Sort by distance</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={setSortByPopulation} style={[styles.sortButton, sortBy === 'population' && styles.activeSortButton]}>
+                        <Text style={styles.buttonText}>Sort by population</Text>
+                    </TouchableOpacity>
+                    <TextInput
+                        style={styles.searchInput}
+                        placeholder="Search by name"
+                        value={searchInput}
+                        onChangeText={setSearchInput}
+                    />
+                </View>
+
                 <FlatList
                     style={styles.flat}
-                    data={filteredCities}
+                    data={sortedCities}
                     renderItem={renderItem}
                     keyExtractor={(item) => item.coordinates.lat}
-                    onEndReachedThreshold={0.1} // Adjust as needed
+                    onEndReachedThreshold={0.1}
                 />
             </View>
         </ImageBackground>
     );
+
 };
 
 const styles = StyleSheet.create({
@@ -67,8 +108,11 @@ const styles = StyleSheet.create({
         width: "100%",
         alignSelf: "center",
         alignItems: "center",
-        marginBottom: "20%",
-        marginTop: "10%"
+        marginBottom: "18%",
+        marginTop: "7%",
+        height: "100%",
+        paddingBottom: "7%",
+
 
     },
     header: {
@@ -84,6 +128,43 @@ const styles = StyleSheet.create({
     cityName: {
         fontWeight: 'bold',
         fontSize: 18,
+    },
+    buttonContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginBottom: 20,
+        paddingHorizontal: "4%",
+        height: "6%",
+        gap: 10,
+    },
+    sortButton: {
+        flex: 1,
+        height: "100%",
+        backgroundColor: 'rgba(255, 255, 255, 0.2)',
+        padding: 10,
+        borderRadius: 5,
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 0,
+
+    },
+    buttonText: {
+        fontSize: 14,
+        fontWeight: 'bold',
+        color: 'white',
+        textAlign: 'center',
+    },
+    activeSortButton: {
+        backgroundColor: 'rgba(255, 255, 255, 0.6)', // Change color for active button
+    },
+    searchInput: {
+        height: "100%",
+        paddingHorizontal: 10,
+        borderRadius: 10,
+        backgroundColor: 'rgba(255, 255, 255, 1)',
+        width: "45%",
+
     },
 });
 
