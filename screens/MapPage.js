@@ -54,7 +54,6 @@ export default function MapPage() {
       title: city.name,
       description: `Population: ${city.population}`,
     }));
-    //console.log(newMarkers)
     setMarkers(newMarkers);
 
     let newMinLat = 1000,
