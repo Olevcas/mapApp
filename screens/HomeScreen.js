@@ -1,23 +1,23 @@
 import React from 'react';
-import { StyleSheet, View, Text, ImageBackground, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, ImageBackground, ScrollView, Image } from 'react-native';
 import Box from "proximity/components/Box.js";
 import TutorialCard from '../components/TutorialCard';
 import GIF from 'proximity/images/foss.gif'; // Make sure this path is correct
-
-
+import logo from "proximity/images/proxiLogo.png";
+import logo2 from "proximity/images/prox.png";
 
 
 export default function HomeScreen() {
-
-
 
     return (
         <ImageBackground source={GIF} style={{ width: "100%", height: "100%" }}>
 
 
             <View style={styles.container}>
-                <Text style={styles.header}> Welcome to proximity </Text>
-
+                <View style={styles.headerLogo}>
+                    <Image resizeMode="contain" source={logo2} style={styles.logo}></Image>
+                    {/*<Text style={styles.header}> Welcome to proximity </Text>*/}
+                </View>
                 <View style={styles.tutBox}>
                     <Text style={styles.tutText}>Below you will find a quick tutorial</Text>
                 </View>
@@ -43,16 +43,21 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
+    logo: {
+        height: 120,
+        width: "100%"
+    },
+    headerLogo: {
+        display: "flex",
+        flexDirection: "row",
+        marginBottom: 0,
+        marginTop: -5
+
+    },
     scroll: {
         width: "100%",
         paddingHorizontal: 20,
         marginTop: -10
-    },
-    header: {
-        fontSize: 40,
-        fontFamily: "Impact",
-        color: "white",
-        marginBottom: -10
     },
     container: {
         marginTop: "10%",
@@ -63,7 +68,7 @@ const styles = StyleSheet.create({
 
     },
     tutText: {
-        fontSize: 20,
+        fontSize: 17,
         textAlign: "center",
         color: "white",
         fontWeight: "bold"

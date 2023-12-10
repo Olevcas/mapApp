@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
   },
   settingsButton: {
     position: "absolute",
-    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
     width: 70,
     height: 70,
     bottom: 9,
