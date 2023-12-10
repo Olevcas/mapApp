@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import MapView, { Marker } from 'react-native-maps';
+import MapView, { Callout, Marker } from 'react-native-maps';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { getDistance, isPointWithinRadius } from 'geolib';
 import Slider from '@react-native-community/slider';
@@ -121,6 +121,7 @@ export default function MapPage() {
     setMainLng(longitude);
   }
 
+
   return (
     <View style={styles.container}>
       <View style={styles.mapbox}>
@@ -128,18 +129,26 @@ export default function MapPage() {
         <TouchableOpacity style={styles.settingsButton} onPress={toggleViewVisibility}><Text style={styles.buttonText}>Show menu</Text></TouchableOpacity>
 
         <MapView style={styles.map} initialRegion={milanRegion} ref={mapRef}>
-          <Marker coordinate={{ latitude: 45.464664, longitude: 9.179540 }} pinColor='blue' draggable onDragEnd={handleMapPress}></Marker>
+          <Marker coordinate={{ latitude: 45.464664, longitude: 9.179540 }} pinColor='blue' draggable onDragEnd={handleMapPress} />
           {markers.map((marker) => (
             <Marker
               key={marker.key}
               coordinate={marker.coordinate}
-              title={marker.title}
-              description={marker.description}
-            />
+            >
+              <Callout>
+                <View>
+                  <Text>{marker.title}</Text>
+                  <Text>{marker.description}</Text>
+                  <TouchableOpacity >
+                    <Text >More Info</Text>
+                  </TouchableOpacity>
+                </View>
+              </Callout>
+            </Marker>
           ))}
         </MapView>
       </View>
-    </View>
+    </View >
   );
 }
 
@@ -225,5 +234,6 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     padding: 3,
     overflow: "hidden"
-  }
+  },
+
 });
