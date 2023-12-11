@@ -7,7 +7,6 @@ import citiesData from '../it3.json';
 import { useNavigation } from '@react-navigation/native';
 import { useCities } from "proximity/Contexts/CitiesContext.js";
 import SettingsCard from "proximity/components/SettingsCard.js"
-import { Audio } from 'expo-av';
 import ExtendedCityCard from '../components/ExtendedCityCard';
 
 
@@ -37,27 +36,6 @@ export default function MapPage() {
   const [selectedMarker, setSelectedMarker] = useState(null);
 
 
-  // For sound
-  const [sound, setSound] = React.useState();
-  async function playSound() {
-    console.log('Loading Sound');
-    const { sound } = await Audio.Sound.createAsync(require('proximity/music/damn.mp3')
-    );
-    setSound(sound);
-
-    console.log('Playing Sound');
-    await sound.playAsync();
-  }
-
-  React.useEffect(() => {
-    return sound
-      ? () => {
-        console.log('Unloading Sound');
-        sound.unloadAsync();
-      }
-      : undefined;
-  }, [sound]);
-
 
   const updateMarkers = (radius) => {
 
@@ -80,6 +58,7 @@ export default function MapPage() {
       },
       title: city.name,
       description: `Population: ${city.population}`,
+
     }));
     setMarkers(newMarkers);
 
@@ -122,7 +101,6 @@ export default function MapPage() {
   }, [newMilanRegion]);
 
   const handleConfirmButtonPress = () => {
-    playSound();    // adds sound to the button
     const filteredCities = updateMarkers(range * 1000);
     setIsViewVisible(false);
     const updatedRegion = {

@@ -48,7 +48,7 @@ function ExtendedCityCard({ cityName, cityLat, cityLng, wikipediaPage, onClose }
 
 
                 <View style={style.mapBox}>
-                    <MapView style={style.extendedMap} initialRegion={setRegion} scrollEnabled={false} zoomEnabled={false} rotateEnabled={false} >
+                    <MapView style={style.extendedMap} initialRegion={setRegion} scrollEnabled={true} zoomEnabled={true} rotateEnabled={true} >
                         <Marker coordinate={{ latitude: cityLat, longitude: cityLng, }} title={cityName} />
                     </MapView>
                 </View>

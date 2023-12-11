@@ -159,7 +159,7 @@
     },
     {
         "geoname_id": "3169522",
-        "name": "Reggio nell'Emilia",
+        "name": "Reggio Emilia",
         "ascii_name": "Reggio nell'Emilia",
         "alternate_names": [
             "Redzho-Ehmilija",
@@ -220,34 +220,6 @@
         "coordinates": {
             "lon": 14.20197,
             "lat": 40.92849
-        }
-    },
-    {
-        "geoname_id": "3176477",
-        "name": "Fuorigrotta",
-        "ascii_name": "Fuorigrotta",
-        "alternate_names": [
-            "Forerotta",
-            "Fuorigrotta"
-        ],
-        "feature_class": "P",
-        "feature_code": "PPL",
-        "country_code": "IT",
-        "cou_name_en": "Italy",
-        "country_code_2": null,
-        "admin1_code": "04",
-        "admin2_code": "NA",
-        "admin3_code": "063049",
-        "admin4_code": "10",
-        "population": 76521,
-        "elevation": null,
-        "dem": 53,
-        "timezone": "Europe/Rome",
-        "modification_date": "2021-10-19",
-        "label_en": "Italy",
-        "coordinates": {
-            "lon": 14.2,
-            "lat": 40.83333
         }
     },
     {
@@ -576,7 +548,7 @@
     },
     {
         "geoname_id": "3171728",
-        "name": "Padova",
+        "name": "Padua",
         "ascii_name": "Padova",
         "alternate_names": [
             "Padoa",
@@ -653,31 +625,6 @@
         "coordinates": {
             "lon": 14.20745,
             "lat": 40.97259
-        }
-    },
-    {
-        "geoname_id": "12070070",
-        "name": "San Lorenzo",
-        "ascii_name": "San Lorenzo",
-        "alternate_names": null,
-        "feature_class": "P",
-        "feature_code": "PPLX",
-        "country_code": "IT",
-        "cou_name_en": "Italy",
-        "country_code_2": null,
-        "admin1_code": "04",
-        "admin2_code": "NA",
-        "admin3_code": "063049",
-        "admin4_code": "4",
-        "population": 48078,
-        "elevation": null,
-        "dem": 29,
-        "timezone": "Europe/Rome",
-        "modification_date": "2019-07-22",
-        "label_en": "Italy",
-        "coordinates": {
-            "lon": 14.26481,
-            "lat": 40.85686
         }
     },
     {
@@ -972,31 +919,6 @@
         "coordinates": {
             "lon": 14.79328,
             "lat": 40.67545
-        }
-    },
-    {
-        "geoname_id": "3170921",
-        "name": "Pianura",
-        "ascii_name": "Pianura",
-        "alternate_names": null,
-        "feature_class": "P",
-        "feature_code": "PPL",
-        "country_code": "IT",
-        "cou_name_en": "Italy",
-        "country_code_2": null,
-        "admin1_code": "04",
-        "admin2_code": "NA",
-        "admin3_code": "063049",
-        "admin4_code": "9",
-        "population": 57821,
-        "elevation": null,
-        "dem": 160,
-        "timezone": "Europe/Rome",
-        "modification_date": "2019-07-22",
-        "label_en": "Italy",
-        "coordinates": {
-            "lon": 14.17314,
-            "lat": 40.85907
         }
     },
     {
@@ -1933,31 +1855,6 @@
         "coordinates": {
             "lon": 11.88068,
             "lat": 43.46276
-        }
-    },
-    {
-        "geoname_id": "10295350",
-        "name": "San Carlo All'Arena",
-        "ascii_name": "San Carlo All'Arena",
-        "alternate_names": null,
-        "feature_class": "P",
-        "feature_code": "PPLX",
-        "country_code": "IT",
-        "cou_name_en": "Italy",
-        "country_code_2": null,
-        "admin1_code": "04",
-        "admin2_code": "NA",
-        "admin3_code": "063049",
-        "admin4_code": "3",
-        "population": 69094,
-        "elevation": null,
-        "dem": 49,
-        "timezone": "Europe/Rome",
-        "modification_date": "2019-07-22",
-        "label_en": "Italy",
-        "coordinates": {
-            "lon": 14.26291,
-            "lat": 40.86511
         }
     },
     {
@@ -3898,31 +3795,6 @@
         }
     },
     {
-        "geoname_id": "3170206",
-        "name": "Ponticelli",
-        "ascii_name": "Ponticelli",
-        "alternate_names": null,
-        "feature_class": "P",
-        "feature_code": "PPL",
-        "country_code": "IT",
-        "cou_name_en": "Italy",
-        "country_code_2": null,
-        "admin1_code": "04",
-        "admin2_code": "NA",
-        "admin3_code": "063049",
-        "admin4_code": "6",
-        "population": 52284,
-        "elevation": null,
-        "dem": 28,
-        "timezone": "Europe/Rome",
-        "modification_date": "2021-10-19",
-        "label_en": "Italy",
-        "coordinates": {
-            "lon": 14.33038,
-            "lat": 40.8542
-        }
-    },
-    {
         "geoname_id": "3172087",
         "name": "Olbia",
         "ascii_name": "Olbia",
@@ -4457,31 +4329,6 @@
         "coordinates": {
             "lon": 9.27795,
             "lat": 45.53004
-        }
-    },
-    {
-        "geoname_id": "12070064",
-        "name": "Arenella",
-        "ascii_name": "Arenella",
-        "alternate_names": null,
-        "feature_class": "P",
-        "feature_code": "PPLX",
-        "country_code": "IT",
-        "cou_name_en": "Italy",
-        "country_code_2": null,
-        "admin1_code": "04",
-        "admin2_code": "NA",
-        "admin3_code": "063049",
-        "admin4_code": "5",
-        "population": 67634,
-        "elevation": null,
-        "dem": 233,
-        "timezone": "Europe/Rome",
-        "modification_date": "2019-07-22",
-        "label_en": "Italy",
-        "coordinates": {
-            "lon": 14.2228,
-            "lat": 40.85734
         }
     },
     {
@@ -5905,31 +5752,6 @@
         "coordinates": {
             "lon": 8.79164,
             "lat": 45.66019
-        }
-    },
-    {
-        "geoname_id": "3166465",
-        "name": "Soccavo",
-        "ascii_name": "Soccavo",
-        "alternate_names": null,
-        "feature_class": "P",
-        "feature_code": "PPL",
-        "country_code": "IT",
-        "cou_name_en": "Italy",
-        "country_code_2": null,
-        "admin1_code": "04",
-        "admin2_code": "NA",
-        "admin3_code": "063049",
-        "admin4_code": "9",
-        "population": 45314,
-        "elevation": null,
-        "dem": 88,
-        "timezone": "Europe/Rome",
-        "modification_date": "2019-07-22",
-        "label_en": "Italy",
-        "coordinates": {
-            "lon": 14.19262,
-            "lat": 40.8455
         }
     },
     {
