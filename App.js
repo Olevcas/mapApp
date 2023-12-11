@@ -1,7 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import MapView, { Marker } from 'react-native-maps';
-import { StyleSheet, View, Text } from 'react-native';
-import { getDistance } from 'geolib';
+import React from 'react';
+import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from "./screens/HomeScreen"
@@ -12,29 +10,26 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { CitiesProvider } from 'proximity/Contexts/CitiesContext.js';
 import { Audio } from 'expo-av';
 
+//Creates the navifation at the bottom of the screen
 const Tab = createBottomTabNavigator();
 
 export default function App() {
 
+  //Line 18 to 36 creates functions to play the background music
   const [sound, setSound] = React.useState();
 
   async function playSound() {
-    console.log('Loading Sound');
     const { sound } = await Audio.Sound.createAsync(require('proximity/music/song1.mp3')
     );
     setSound(sound);
-
-    console.log('Playing Sound');
     await sound.playAsync();
   }
 
   React.useEffect(() => {
-
     playSound();
 
     return sound
       ? () => {
-        console.log('Unloading Sound');
         sound.unloadAsync();
       }
       : undefined;
@@ -44,8 +39,9 @@ export default function App() {
 
 
   return (
-    <CitiesProvider>
-      <NavigationContainer>
+
+    < CitiesProvider /* This component is a context that allows the filteredCities variable to be transported across files */>
+      < NavigationContainer /* Below are the different tabs of the navigation bar with the name and icon of each tab*/>
         <Tab.Navigator screenOptions={{ headerShown: false, tabBarInactiveTintColor: "seagreen" }}>
           <Tab.Screen name="Proximity" style={{ color: "red" }} component={HomeScreen} options={{
             tabBarIcon: ({ color, size }) => (<Ionicons name="home-outline" size={24} style={{ color: "seagreen" }} />)
@@ -60,7 +56,7 @@ export default function App() {
           }} />
 
         </Tab.Navigator>
-      </NavigationContainer>
+      </NavigationContainer >
     </CitiesProvider >
   );
 }
