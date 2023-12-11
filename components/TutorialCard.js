@@ -1,11 +1,13 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
+import { Video, ResizeMode } from 'expo-av';
 
 
 function TutorialCard(props) {
 
     const number = props.number;
     const header = props.header;
+    const path = props.path;
 
     return (
         <View style={styles.container}>
@@ -17,7 +19,14 @@ function TutorialCard(props) {
                     <Text style={styles.boxText}>{header}</Text>
                 </View>
             </View>
-            <View style={styles.videoBox}></View>
+            <View style={styles.videoBox}>
+                <Video
+                    style={styles.video}
+                    source={path}
+                    useNativeControls
+                    isLooping
+                ></Video>
+            </View>
         </View>
     );
 }
@@ -26,30 +35,33 @@ export default TutorialCard;
 
 const styles = StyleSheet.create({
 
+    video: {
+        height: "100%",
+    },
     videoBox: {
-        width: "50%",
-        height: "60%",
+        width: "60%",
+        height: "65%",
         borderColor: "seagreen",
         borderWidth: 3,
         borderRadius: 5,
         alignSelf: "center"
     },
     boxText: {
-        fontSize: 20
+        fontSize: 18,
     },
     textWrapper: {
-        alignItems: "center",
         justifyContent: "center",
-        width: "80%"
+        width: 300,
     },
     numberAndText: {
         flexDirection: "row",
-        gap: 10,
-        marginBottom: 15
+        marginBottom: 10,
+        gap: 15,
+        width: "100%",
     },
     container: {
         width: "100%",
-        height: 250,
+        height: 260,
         backgroundColor: "white",
         opacity: 0.8,
         borderRadius: 8,

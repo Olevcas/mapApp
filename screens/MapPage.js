@@ -73,7 +73,7 @@ export default function MapPage() {
     });
 
     const newMarkers = filteredCities.map((city) => ({
-      key: city.name,
+      key: city.coordinates.lat + Math.random() * 100,
       coordinate: {
         latitude: parseFloat(city.coordinates.lat),
         longitude: parseFloat(city.coordinates.lon),
@@ -121,10 +121,6 @@ export default function MapPage() {
     }
   }, [newMilanRegion]);
 
-  const handleSliderChange = (value) => {
-    setRange(parseInt(value));
-  };
-
   const handleConfirmButtonPress = () => {
     playSound();    // adds sound to the button
     const filteredCities = updateMarkers(range * 1000);
@@ -165,7 +161,7 @@ export default function MapPage() {
         <TouchableOpacity style={styles.settingsButton} onPress={toggleViewVisibility}><Text style={styles.buttonText}>Show menu</Text></TouchableOpacity>
         <MapView style={styles.map} initialRegion={milanRegion} ref={mapRef}>
           <Marker coordinate={{ latitude: 45.464664, longitude: 9.179540 }} pinColor='blue' draggable onDragEnd={handleMapPress} />
-          {markers.map((marker) => (
+          {markers.map((marker, index) => (
             <>
               <Marker
                 key={marker.key}

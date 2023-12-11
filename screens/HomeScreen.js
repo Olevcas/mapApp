@@ -3,44 +3,67 @@ import { StyleSheet, View, Text, ImageBackground, ScrollView, Image } from 'reac
 import TutorialCard from '../components/TutorialCard';
 import GIF from 'proximity/images/foss.gif'; // Make sure this path is correct
 import logo2 from "proximity/images/prox.png";
-
+import { Video, ResizeMode } from 'expo-av';
 
 export default function HomeScreen() {
+
+    const video = React.useRef(null);
+    const [status, setStatus] = React.useState({});
+
+
 
     return (
         <ImageBackground source={GIF} style={{ width: "100%", height: "100%" }}>
 
 
             <View style={styles.container}>
+
                 <View style={styles.headerLogo}>
                     <Image resizeMode="contain" source={logo2} style={styles.logo}></Image>
-                    {/*<Text style={styles.header}> Welcome to proximity </Text>*/}
                 </View>
+
                 <View style={styles.tutBox}>
                     <Text style={styles.tutText}>Below you will find a quick tutorial</Text>
                 </View>
 
                 <ScrollView style={styles.scroll}>
+                    <TutorialCard number="1" header="Navigate to the Map Page to start filtering cities:" path={require("../videos/Tut1.mp4")}></TutorialCard>
+                    <TutorialCard number="2" header="Press the 'Show menu' button and set a radius:" path={require("../videos/Tut2.mp4")}></TutorialCard>
+                    <TutorialCard number="3" header="Confirm the radius, and let the map show the relevant cities:" path={require("../videos/Tut3.mp4")}></TutorialCard>
+                    <TutorialCard number="4" header="To get a list view of the cities, head over to the City List page:" path={require("../videos/Tut4.mp4")}></TutorialCard>
+                    <TutorialCard number="5" header="Filter based on population, distance, or even search:" path={require("../videos/Tut5.mp4")}></TutorialCard>
 
-                    <TutorialCard number="1" header="Navigate to the Map page to start filtering cities:"></TutorialCard>
-                    <TutorialCard number="2" header="Press the 'Show menu' button and set a radius:"></TutorialCard>
-                    <TutorialCard number="3" header="Confirm the radius, and let the map show the relevant cities!"></TutorialCard>
-                    <TutorialCard number="4" header="To get a list view of the cities, head over to the City List page:"></TutorialCard>
+                    <View style={styles.credz}>
+                        <Text style={{ fontSize: 20, fontWeight: "bold", marginBottom: 5 }}>Made by:</Text>
+                        <Text style={{ fontWeight: 600 }}>Henrik Bang-Olsen</Text>
+                        <Text style={{ fontWeight: 600 }}>Ole Evjen-Caspersen</Text>
+                    </View>
 
                 </ScrollView>
 
 
+
             </View>
-
-
         </ImageBackground>
-
-
-
     );
 }
 
 const styles = StyleSheet.create({
+    credz: {
+        alignItems: "center",
+        width: "100%",
+        borderRadius: 8,
+        backgroundColor: "white",
+        opacity: 0.8,
+        gap: 3,
+        padding: 7,
+        marginBottom: 20
+
+    },
+    video: {
+        width: 200,
+        height: 200
+    },
     logo: {
         height: 120,
         width: "100%"
@@ -55,7 +78,7 @@ const styles = StyleSheet.create({
     scroll: {
         width: "100%",
         paddingHorizontal: 20,
-        marginTop: -10
+        marginTop: -10,
     },
     container: {
         marginTop: "10%",
