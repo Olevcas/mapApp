@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import MapView, { Marker } from 'react-native-maps';
 import { StyleSheet, View, Text } from 'react-native';
 import { getDistance } from 'geolib';
@@ -10,13 +10,37 @@ import MapPage from "./screens/MapPage"
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { CitiesProvider } from 'proximity/Contexts/CitiesContext.js';
-
-
-
+import { Audio } from 'expo-av';
 
 const Tab = createBottomTabNavigator();
 
 export default function App() {
+
+  const [sound, setSound] = React.useState();
+
+  async function playSound() {
+    console.log('Loading Sound');
+    const { sound } = await Audio.Sound.createAsync(require('proximity/music/song1.mp3')
+    );
+    setSound(sound);
+
+    console.log('Playing Sound');
+    await sound.playAsync();
+  }
+
+  React.useEffect(() => {
+
+    playSound();
+
+    return sound
+      ? () => {
+        console.log('Unloading Sound');
+        sound.unloadAsync();
+      }
+      : undefined;
+  }, []);
+
+
 
 
   return (
