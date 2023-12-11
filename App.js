@@ -26,6 +26,7 @@ export default function App() {
   }
 
   React.useEffect(() => {
+    //The line of code below starts the music
     playSound();
 
     return sound

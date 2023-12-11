@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        marginBottom: 20,
+        marginBottom: 30,
         paddingHorizontal: "4%",
         height: "6%",
         gap: 10,
@@ -154,16 +154,16 @@ const styles = StyleSheet.create({
     activeSortButton: {
         width: "110%",
         height: "110%",
-        borderWidth: 2,
-        borderColor: "white",
-        backgroundColor: 'rgba(255, 255, 255, 0.5)',
-        shadowColor: 'white',
+        borderWidth: 3,
+        borderColor: "seagreen",
+        backgroundColor: 'rgba(255, 255, 255, 1)',
+        shadowColor: 'seagreen',
         shadowOffset: {
             width: 0,
             height: 0,
         },
         shadowOpacity: 0.9,
-        shadowRadius: 2,
+        shadowRadius: 3,
 
     },
     searchInput: {

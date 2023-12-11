@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     },
     scroll: {
         width: "100%",
-        paddingHorizontal: 20,
+        paddingHorizontal: 40,
         marginTop: -10,
     },
     container: {

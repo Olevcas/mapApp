@@ -51,12 +51,12 @@ const styles = StyleSheet.create({
     },
     textWrapper: {
         justifyContent: "center",
-        width: 300,
+        width: "80%",
     },
     numberAndText: {
         flexDirection: "row",
         marginBottom: 10,
-        gap: 15,
+        gap: 11,
         width: "100%",
     },
     container: {

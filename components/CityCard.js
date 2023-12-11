@@ -20,7 +20,7 @@ function CityCard(props) {
 
     const cityName = props.cityName;
     const population = props.population;
-    const distance = props.distance;
+    const distance = Math.round(props.distance);
 
 
     const cityLat = parseFloat(props.cityLat);
@@ -33,8 +33,8 @@ function CityCard(props) {
         <View style={style.container}>
             <View style={style.cardbox}>
                 <Text style={style.header}>{cityName}</Text>
-                <Text style={style.texts}>Population: {population}</Text>
                 <Text style={style.texts}>Distance: {distance} km</Text>
+                <Text style={style.texts}>Population: {population}</Text>
                 <TouchableOpacity onPress={toggleExtended}>
                     <Text style={style.moreInfoButton}>More Info</Text>
                 </TouchableOpacity>
@@ -65,17 +65,20 @@ export default CityCard;
 
 const style = StyleSheet.create({
     cardbox: {
-        width: "100%",
+        width: "90%",
         justifyContent: "center",
         overflow: 'hidden',
-        padding: 15,
+        paddingTop: 15,
+        paddingBottom: 10,
+        paddingHorizontal: 10,
         gap: 15,
         elevation: 12,
         backgroundColor: "white",
         marginBottom: 20,
         borderRadius: 8,
-        borderWidth: 3,
-        borderColor: "seagreen"
+        borderWidth: 4,
+        borderColor: "seagreen",
+        alignItems: "center",
     },
     texts: {
         fontSize: 20,
@@ -86,15 +89,6 @@ const style = StyleSheet.create({
     container: {
         width: "100%",
         opacity: 0.8,
-        /*shadowColor: "black",
-        shadowOffset: {
-            width: 5,
-            height: 5,
-        },
-        shadowOpacity: 0.5,
-        shadowRadius: 6.49,
-
-        elevation: 12, */
         alignItems: "center",
     },
     header: {
