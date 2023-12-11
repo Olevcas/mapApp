@@ -74,6 +74,8 @@ const style = StyleSheet.create({
         backgroundColor: "white",
         marginBottom: 20,
         borderRadius: 8,
+        borderWidth: 3,
+        borderColor: "seagreen"
     },
     texts: {
         fontSize: 20,
