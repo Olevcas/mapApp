@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-import MapView, { Callout, Marker } from 'react-native-maps';
+import MapView, { Callout, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import { getDistance, isPointWithinRadius } from 'geolib';
-import Slider from '@react-native-community/slider';
+import { isPointWithinRadius } from 'geolib';
 import citiesData from '../it3.json';
-import { useNavigation } from '@react-navigation/native';
 import { useCities } from "proximity/Contexts/CitiesContext.js";
 import SettingsCard from "proximity/components/SettingsCard.js"
 import ExtendedCityCard from '../components/ExtendedCityCard';
+import * as Location from 'expo-location';
+
 
 
 const milanRegion = {
@@ -34,18 +34,31 @@ export default function MapPage() {
   const [newMilanRegion, setNewMilanRegion] = useState(milanRegion);
   const mapRef = useRef(null);
   const [selectedMarker, setSelectedMarker] = useState(null);
+  const [userLocation, setUserLocation] = useState(null);
 
+  useEffect(() => {
+    async function getLocationAsync() {
+      let { status } = await Location.requestForegroundPermissionsAsync();
 
+      if (status !== 'granted') {
+        console.log('Permission to access location was denied');
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setUserLocation(location.coords);
+    }
+
+    getLocationAsync();
+  }, []);
 
   const updateMarkers = (radius) => {
 
     const center = { latitude: mainLat, longitude: mainLng };
 
-
     const filteredCities = citiesData.filter((city) => {
       const cityLat = parseFloat(city.coordinates.lat);
       const cityLng = parseFloat(city.coordinates.lon);
-
 
       return isPointWithinRadius(center, { latitude: cityLat, longitude: cityLng }, radius);
     });
@@ -101,6 +114,8 @@ export default function MapPage() {
   }, [newMilanRegion]);
 
   const handleConfirmButtonPress = () => {
+    console.log("Latitude: " + userLocation.latitude);
+    console.log("Longitude: " + userLocation.longitude)
     const filteredCities = updateMarkers(range * 1000);
     setIsViewVisible(false);
     const updatedRegion = {
@@ -117,16 +132,10 @@ export default function MapPage() {
     setIsViewVisible(!isViewVisible);
   };
 
-  const handleMapPress = (event) => {
-    const { latitude, longitude } = event.nativeEvent.coordinate;
-    setMainLat(latitude);
-    setMainLng(longitude);
-  }
   const toggleExtended = (marker) => {
     setSelectedMarker(marker);
     setIsExtendedVisible(true);
   }
-
 
   return (
     <View style={styles.container}>
@@ -137,8 +146,9 @@ export default function MapPage() {
           wikipediaPage={'https://en.wikipedia.org/wiki/' + selectedMarker.title + ''} onClose={() => setIsExtendedVisible(false)}></ExtendedCityCard>)}
         {isViewVisible && (<SettingsCard updateRange={(value) => setRange(value)} handleConfirmButtonPress={handleConfirmButtonPress}></SettingsCard>)}
         <TouchableOpacity style={styles.settingsButton} onPress={toggleViewVisibility}><Text style={styles.buttonText}>Show menu</Text></TouchableOpacity>
-        <MapView style={styles.map} initialRegion={milanRegion} ref={mapRef}>
-          <Marker coordinate={{ latitude: 45.464664, longitude: 9.179540 }} pinColor='blue' draggable onDragEnd={handleMapPress} />
+        {userLocation ? (<MapView provider={PROVIDER_GOOGLE} style={styles.map} initialRegion={{
+          latitude: userLocation.latitude, longitude: userLocation.longitude, latitudeDelta: 0.2222, longitudeDelta: 0.2222,
+        }} ref={mapRef} showsUserLocation={true}>
           {markers.map((marker, index) => (
             <>
               <Marker
@@ -159,6 +169,9 @@ export default function MapPage() {
 
           ))}
         </MapView>
+        ) : (
+          <Text>Loading...</Text>
+        )}
       </View>
     </View >
   );
