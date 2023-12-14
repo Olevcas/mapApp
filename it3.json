@@ -254,35 +254,6 @@
         }
     },
     {
-        "geoname_id": "3178671",
-        "name": "Cinisello Balsamo",
-        "ascii_name": "Cinisello Balsamo",
-        "alternate_names": [
-            "Cinisello",
-            "Cinisello Balsamo",
-            "\u30c1\u30cb\u30bc\u30c3\u30ed\u30fb\u30d0\u30eb\u30b5\u30e2"
-        ],
-        "feature_class": "P",
-        "feature_code": "PPLA3",
-        "country_code": "IT",
-        "cou_name_en": "Italy",
-        "country_code_2": null,
-        "admin1_code": "09",
-        "admin2_code": "MI",
-        "admin3_code": "015077",
-        "admin4_code": null,
-        "population": 75943,
-        "elevation": "154",
-        "dem": 158,
-        "timezone": "Europe/Rome",
-        "modification_date": "2022-09-27",
-        "label_en": "Italy",
-        "coordinates": {
-            "lon": 9.21495,
-            "lat": 45.55823
-        }
-    },
-    {
         "geoname_id": "3180172",
         "name": "Casalnuovo di Napoli",
         "ascii_name": "Casalnuovo di Napoli",
@@ -2433,8 +2404,8 @@
     },
     {
         "geoname_id": "3174741",
-        "name": "Lido di Ostia",
-        "ascii_name": "Lido di Ostia",
+        "name": "Ostia (Rome)",
+        "ascii_name": "Ostia",
         "alternate_names": [
             "Lido di Ostia",
             "Lido di Roma",
@@ -3208,7 +3179,7 @@
     },
     {
         "geoname_id": "2523630",
-        "name": "Reggio Calabria",
+        "name": "Reggio di Calabria",
         "ascii_name": "Reggio Calabria",
         "alternate_names": [
             "REG",
@@ -3283,7 +3254,7 @@
     },
     {
         "geoname_id": "3182957",
-        "name": "Aprilia",
+        "name": "Aprilia, Lazio",
         "ascii_name": "Aprilia",
         "alternate_names": [
             "Aprilia",
@@ -5221,8 +5192,8 @@
     },
     {
         "geoname_id": "3183539",
-        "name": "Acilia-Castel Fusano-Ostia Antica",
-        "ascii_name": "Acilia-Castel Fusano-Ostia Antica",
+        "name": "Acilia",
+        "ascii_name": "Acilia",
         "alternate_names": null,
         "feature_class": "P",
         "feature_code": "PPL",
@@ -5233,15 +5204,15 @@
         "admin2_code": "RM",
         "admin3_code": "058091",
         "admin4_code": "05809110",
-        "population": 129362,
+        "population": 76000,
         "elevation": null,
         "dem": 5,
         "timezone": "Europe/Rome",
         "modification_date": "2016-12-28",
         "label_en": "Italy",
         "coordinates": {
-            "lon": 12.33078,
-            "lat": 41.76337
+            "lon": 12.366667,
+            "lat": 41.783333
         }
     },
     {
