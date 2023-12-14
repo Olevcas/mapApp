@@ -4,13 +4,19 @@ import Slider from '@react-native-community/slider';
 
 function SettingsCard(props) {
 
+    //sliderValue is the current value of the slider, and is updated everytime the confirmButton is pressed on settingsCard.
+    //Because the settingsCard is rendered again everytime the component is hid and showed again, I had to save the current state
+    //of the slider in a variable called storedSliderValue in mapPage.js. The initial value of range is therefore set to sliderValue
+    //which in fact is the storedSliderValue collected from mapPage.js, So sliderValue and storedSliderValue is the same variable.
+    const sliderValue = props.sliderValue;
     const handleConfirmButtonPress = props.handleConfirmButtonPress;
     const updateRange = props.updateRange; // Get the function to update range
-    const [range, setRange] = useState(0);
+    const [range, setRange] = useState(sliderValue);
 
 
     const handleSliderChange = (value) => {
         setRange(parseInt(value));
+
     };
     const handleSliderCompleted = (value) => {
         updateRange(parseInt(value)); // Call the function to update range in MapPage

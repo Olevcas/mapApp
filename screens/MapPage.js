@@ -19,7 +19,7 @@ const milanRegion = {
 
 export default function MapPage() {
 
-
+  const [storedSliderValue, setStoredSliderValue] = useState(0); // State to store the slider value
   const { setFilteredCities } = useCities();
   const [range, setRange] = useState(0);
   const [markers, setMarkers] = useState([]);
@@ -55,12 +55,19 @@ export default function MapPage() {
 
     const center = { latitude: userLocation.latitude, longitude: userLocation.longitude };
 
-    const filteredCities = citiesData.filter((city) => {
-      const cityLat = parseFloat(city.coordinates.lat);
-      const cityLng = parseFloat(city.coordinates.lon);
+    let filteredCities = [];
 
-      return isPointWithinRadius(center, { latitude: cityLat, longitude: cityLng }, radius);
-    });
+    if (radius === 0) {
+      // If the range is set to 0, show no markers
+      filteredCities = [];
+    } else {
+      filteredCities = citiesData.filter((city) => {
+        const cityLat = parseFloat(city.coordinates.lat);
+        const cityLng = parseFloat(city.coordinates.lon);
+
+        return isPointWithinRadius(center, { latitude: cityLat, longitude: cityLng }, radius);
+      });
+    }
 
     const newMarkers = filteredCities.map((city) => ({
       key: city.coordinates.lat + Math.random() * 100,
@@ -113,8 +120,7 @@ export default function MapPage() {
   }, [newMilanRegion]);
 
   const handleConfirmButtonPress = () => {
-    console.log("Latitude: " + userLocation.latitude);
-    console.log("Longitude: " + userLocation.longitude)
+    setStoredSliderValue(range);
     const filteredCities = updateMarkers(range * 1000);
     setIsViewVisible(false);
     const updatedRegion = {
@@ -151,7 +157,7 @@ export default function MapPage() {
           cityLat={selectedMarker.coordinate.latitude}
           cityLng={selectedMarker.coordinate.longitude}
           wikipediaPage={'https://en.wikipedia.org/wiki/' + selectedMarker.title + ''} onClose={() => onCloseFunction()}></ExtendedCityCard>)}
-        {isViewVisible && (<SettingsCard updateRange={(value) => setRange(value)} handleConfirmButtonPress={handleConfirmButtonPress}></SettingsCard>)}
+        {isViewVisible && (<SettingsCard sliderValue={storedSliderValue} updateRange={(value) => setRange(value)} handleConfirmButtonPress={handleConfirmButtonPress}></SettingsCard>)}
         {isSettingsVisible && (<TouchableOpacity style={styles.settingsButton} onPress={toggleViewVisibility}><Text style={styles.buttonText}>Show menu</Text></TouchableOpacity>)}
         {userLocation ? (
           <MapView style={styles.map} initialRegion={{
