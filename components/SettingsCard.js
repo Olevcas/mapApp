@@ -11,15 +11,16 @@ function SettingsCard(props) {
 
     const handleSliderChange = (value) => {
         setRange(parseInt(value));
+    };
+    const handleSliderCompleted = (value) => {
         updateRange(parseInt(value)); // Call the function to update range in MapPage
     };
-
 
     return (
 
         <View style={styles.card}>
             <Text style={{ fontSize: 25, fontWeight: "bold", color: "#2b2b2b", opacity: 0.95 }}>Choose your radius</Text>
-            <Slider onValueChange={handleSliderChange} style={{ width: '90%', height: 60 }} minimumValue={0} maximumValue={1250} step={20} value={range} minimumTrackTintColor="seagreen" maximumTrackTintColor="seagreen" />
+            <Slider onValueChange={handleSliderChange} onSlidingComplete={handleSliderCompleted} tapToSeek={true} style={{ width: '90%', height: 60 }} minimumValue={0} maximumValue={1250} step={20} value={range} minimumTrackTintColor="seagreen" maximumTrackTintColor="seagreen" />
             <Text style={{ fontSize: 25, fontWeight: "bold", marginTop: "-2%", marginBottom: "2%", color: "#2b2b2b", opacity: 0.95 }}>{range + " km"}</Text>
             <TouchableOpacity style={styles.confirmButton} onPress={handleConfirmButtonPress} ><Text style={styles.confirmText}>Confirm radius</Text></TouchableOpacity>
         </View>

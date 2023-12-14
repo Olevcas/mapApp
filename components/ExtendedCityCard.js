@@ -123,19 +123,17 @@ const style = StyleSheet.create({
     },
     closeButton: {
         fontSize: 18,
-        color: 'black',
+        color: "white",
 
     },
     buttonBox: {
         width: "30%",
         height: "5%",
-        backgroundColor: "white",
+        backgroundColor: "seagreen",
         borderRadius: 5,
-        borderColor: "seagreen",
-        borderWidth: 3,
         alignItems: "center",
         justifyContent: "center",
-        marginTop: 20
+        marginTop: 15
     },
     extendedMap: {
         width: '100%',

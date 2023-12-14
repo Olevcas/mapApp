@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import MapView, { Callout, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView, { Callout, CalloutSubview, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { isPointWithinRadius } from 'geolib';
 import citiesData from '../it3.json';
@@ -25,8 +25,7 @@ export default function MapPage() {
   const [markers, setMarkers] = useState([]);
   const [isViewVisible, setIsViewVisible] = useState(false);
   const [isExtendedVisible, setIsExtendedVisible] = useState(false);
-  const [mainLat, setMainLat] = useState(45.464664);
-  const [mainLng, setMainLng] = useState(9.179540);
+  const [isSettingsVisible, setIsSettingsVisible] = useState(true);
   const [minLat, setMinLat] = useState(1000);
   const [maxLat, setMaxLat] = useState(0);
   const [minLng, setMinLng] = useState(1000);
@@ -54,7 +53,7 @@ export default function MapPage() {
 
   const updateMarkers = (radius) => {
 
-    const center = { latitude: mainLat, longitude: mainLng };
+    const center = { latitude: userLocation.latitude, longitude: userLocation.longitude };
 
     const filteredCities = citiesData.filter((city) => {
       const cityLat = parseFloat(city.coordinates.lat);
@@ -133,8 +132,16 @@ export default function MapPage() {
   };
 
   const toggleExtended = (marker) => {
+    setIsSettingsVisible(!isSettingsVisible);
     setSelectedMarker(marker);
     setIsExtendedVisible(true);
+  }
+
+  //When the close button is clicked on ExtendedCityCard, the ExtendedCityCard becomes invisible, and the Show Menu button becomes visible again.
+  const onCloseFunction = () => {
+    setIsExtendedVisible(false);
+    setIsSettingsVisible(true);
+
   }
 
   return (
@@ -143,32 +150,32 @@ export default function MapPage() {
         {isExtendedVisible && (<ExtendedCityCard cityName={selectedMarker.title}
           cityLat={selectedMarker.coordinate.latitude}
           cityLng={selectedMarker.coordinate.longitude}
-          wikipediaPage={'https://en.wikipedia.org/wiki/' + selectedMarker.title + ''} onClose={() => setIsExtendedVisible(false)}></ExtendedCityCard>)}
+          wikipediaPage={'https://en.wikipedia.org/wiki/' + selectedMarker.title + ''} onClose={() => onCloseFunction()}></ExtendedCityCard>)}
         {isViewVisible && (<SettingsCard updateRange={(value) => setRange(value)} handleConfirmButtonPress={handleConfirmButtonPress}></SettingsCard>)}
-        <TouchableOpacity style={styles.settingsButton} onPress={toggleViewVisibility}><Text style={styles.buttonText}>Show menu</Text></TouchableOpacity>
-        {userLocation ? (<MapView provider={PROVIDER_GOOGLE} style={styles.map} initialRegion={{
-          latitude: userLocation.latitude, longitude: userLocation.longitude, latitudeDelta: 0.2222, longitudeDelta: 0.2222,
-        }} ref={mapRef} showsUserLocation={true}>
-          {markers.map((marker, index) => (
-            <>
-              <Marker
-                key={marker.key}
-                coordinate={marker.coordinate}
-              >
-                <Callout>
-                  <View>
-                    <Text>{marker.title}</Text>
-                    <Text>{marker.description}</Text>
-                    <TouchableOpacity onPress={() => toggleExtended(marker)} >
-                      <Text >More Info</Text>
-                    </TouchableOpacity>
-                  </View>
-                </Callout>
-              </Marker>
-            </>
-
-          ))}
-        </MapView>
+        {isSettingsVisible && (<TouchableOpacity style={styles.settingsButton} onPress={toggleViewVisibility}><Text style={styles.buttonText}>Show menu</Text></TouchableOpacity>)}
+        {userLocation ? (
+          <MapView style={styles.map} initialRegion={{
+            latitude: userLocation.latitude, longitude: userLocation.longitude, latitudeDelta: 0.2222, longitudeDelta: 0.2222,
+          }} ref={mapRef} showsUserLocation={true}>
+            {markers.map((marker, index) => (
+              <>
+                <Marker
+                  key={marker.key}
+                  coordinate={marker.coordinate}
+                >
+                  <Callout>
+                    <View style={{ width: "100%", height: "100%", alignItems: "center", justifyContent: "center", padding: 10 }}>
+                      <Text style={{ fontSize: 25, marginBottom: 10, fontWeight: 500 }}>{marker.title}</Text>
+                      <Text style={{ marginBottom: 15, fontSize: 15 }}>{marker.description}</Text>
+                      <TouchableOpacity style={styles.markerInfo} onPress={() => toggleExtended(marker)} >
+                        <Text style={{ fontSize: 15, color: "white" }} >More Info</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </Callout>
+                </Marker>
+              </>
+            ))}
+          </MapView>
         ) : (
           <Text>Loading...</Text>
         )}
@@ -207,7 +214,7 @@ const styles = StyleSheet.create({
   },
   settingsButton: {
     position: "absolute",
-    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    backgroundColor: "rgba(46, 139, 87, 0.9)",
     width: 70,
     height: 70,
     bottom: 9,
@@ -217,13 +224,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 8,
     borderWidth: 3,
-    borderColor: "seagreen",
+    borderColor: "white",
     overflow: "hidden",
     textAlign: "center",
 
   },
   buttonText: {
-    color: "seagreen",
+    color: "white",
     fontWeight: "bold"
   },
   card: {
@@ -259,6 +266,14 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     padding: 3,
     overflow: "hidden"
+  },
+  markerInfo: {
+    width: "80%",
+    height: "40%",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 5,
+    backgroundColor: "seagreen"
   },
 
 });
