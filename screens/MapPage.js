@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import MapView, { Callout, CalloutSubview, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import MapView, { Callout, Marker } from 'react-native-maps';
+import { StyleSheet, View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { isPointWithinRadius } from 'geolib';
 import citiesData from '../it3.json';
 import { useCities } from "proximity/Contexts/CitiesContext.js";
@@ -34,6 +34,7 @@ export default function MapPage() {
   const mapRef = useRef(null);
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [userLocation, setUserLocation] = useState(null);
+  const [loadingLocation, setLoadingLocation] = useState(true);
 
   useEffect(() => {
     async function getLocationAsync() {
@@ -41,11 +42,18 @@ export default function MapPage() {
 
       if (status !== 'granted') {
         console.log('Permission to access location was denied');
+        setLoadingLocation(false);
         return;
       }
 
-      let location = await Location.getCurrentPositionAsync({});
-      setUserLocation(location.coords);
+      try {
+        let location = await Location.getCurrentPositionAsync({});
+        setUserLocation(location.coords);
+      } catch (error) {
+        console.error('Error fetching location:', error);
+      } finally {
+        setLoadingLocation(false);
+      }
     }
 
     getLocationAsync();
@@ -153,37 +161,43 @@ export default function MapPage() {
   return (
     <View style={styles.container}>
       <View style={styles.mapbox}>
+
         {isExtendedVisible && (<ExtendedCityCard cityName={selectedMarker.title}
           cityLat={selectedMarker.coordinate.latitude}
           cityLng={selectedMarker.coordinate.longitude}
           wikipediaPage={'https://en.wikipedia.org/wiki/' + selectedMarker.title + ''} onClose={() => onCloseFunction()}></ExtendedCityCard>)}
         {isViewVisible && (<SettingsCard sliderValue={storedSliderValue} updateRange={(value) => setRange(value)} handleConfirmButtonPress={handleConfirmButtonPress}></SettingsCard>)}
         {isSettingsVisible && (<TouchableOpacity style={styles.settingsButton} onPress={toggleViewVisibility}><Text style={styles.buttonText}>Show menu</Text></TouchableOpacity>)}
-        {userLocation ? (
-          <MapView style={styles.map} initialRegion={{
-            latitude: userLocation.latitude, longitude: userLocation.longitude, latitudeDelta: 0.2222, longitudeDelta: 0.2222,
-          }} ref={mapRef} showsUserLocation={true}>
-            {markers.map((marker, index) => (
-              <>
-                <Marker
-                  key={marker.key}
-                  coordinate={marker.coordinate}
-                >
-                  <Callout>
-                    <View style={{ width: "100%", height: "100%", alignItems: "center", justifyContent: "center", padding: 10 }}>
-                      <Text style={{ fontSize: 25, marginBottom: 10, fontWeight: 500 }}>{marker.title}</Text>
-                      <Text style={{ marginBottom: 15, fontSize: 15 }}>{marker.description}</Text>
-                      <TouchableOpacity style={styles.markerInfo} onPress={() => toggleExtended(marker)} >
-                        <Text style={{ fontSize: 15, color: "white" }} >More Info</Text>
-                      </TouchableOpacity>
-                    </View>
-                  </Callout>
-                </Marker>
-              </>
-            ))}
-          </MapView>
+        {loadingLocation ? (
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color="rgba(46, 139, 87, 0.9)" />
+            <Text style={styles.loadingText}>Loading location...</Text>
+          </View>
         ) : (
-          <Text>Loading...</Text>
+          userLocation && (
+            <MapView style={styles.map} initialRegion={{
+              latitude: userLocation.latitude, longitude: userLocation.longitude, latitudeDelta: 0.2222, longitudeDelta: 0.2222,
+            }} ref={mapRef} showsUserLocation={true}>
+              {markers.map((marker, index) => (
+                <>
+                  <Marker
+                    key={marker.key}
+                    coordinate={marker.coordinate}
+                  >
+                    <Callout>
+                      <View style={{ width: "100%", height: "100%", alignItems: "center", justifyContent: "center", padding: 10 }}>
+                        <Text style={{ fontSize: 25, marginBottom: 10, fontWeight: 500 }}>{marker.title}</Text>
+                        <Text style={{ marginBottom: 15, fontSize: 15 }}>{marker.description}</Text>
+                        <TouchableOpacity style={styles.markerInfo} onPress={() => toggleExtended(marker)} >
+                          <Text style={{ fontSize: 15, color: "white" }} >More Info</Text>
+                        </TouchableOpacity>
+                      </View>
+                    </Callout>
+                  </Marker>
+                </>
+              ))}
+            </MapView>
+          )
         )}
       </View>
     </View >
@@ -280,6 +294,16 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 5,
     backgroundColor: "seagreen"
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingText: {
+    marginTop: 10,
+    fontSize: 18,
+    color: 'white',
   },
 
 });
