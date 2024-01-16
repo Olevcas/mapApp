@@ -44,10 +44,10 @@ export default function App() {
     < CitiesProvider /* This component is a context that allows the filteredCities variable to be transported across files */>
       < NavigationContainer /* Below are the different tabs of the navigation bar with the name and icon of each tab*/>
         <Tab.Navigator screenOptions={{ headerShown: false, tabBarInactiveTintColor: "seagreen" }}>
-          <Tab.Screen name="Proximity" style={{ color: "red" }} component={HomeScreen} options={{
+          <Tab.Screen name="Tutorial" component={HomeScreen} options={{
             tabBarIcon: ({ color, size }) => (<Ionicons name="home-outline" size={24} style={{ color: "seagreen" }} />)
           }} />
-          <Tab.Screen name="Map Page" component={MapPage} options={{
+          <Tab.Screen name="Explore" component={MapPage} options={{
             tabBarIcon: ({ color, size }) => (
               <Ionicons style={{ color: "seagreen" }} name="md-map-outline" size={24} color="black" />)
           }} />
