@@ -62,7 +62,7 @@ export default function MapPage() {
   const updateMarkers = (radius) => {
 
     const center = { latitude: userLocation.latitude, longitude: userLocation.longitude };
-
+    const centerMilan = { latitude: 45.464664, longitude: 9.179540, }
     let filteredCities = [];
 
     if (radius === 0) {
@@ -73,7 +73,7 @@ export default function MapPage() {
         const cityLat = parseFloat(city.coordinates.lat);
         const cityLng = parseFloat(city.coordinates.lon);
 
-        return isPointWithinRadius(center, { latitude: cityLat, longitude: cityLng }, radius);
+        return isPointWithinRadius(centerMilan, { latitude: cityLat, longitude: cityLng }, radius);
       });
     }
     const formatter = Intl.NumberFormat("no", { notation: "compact" });
