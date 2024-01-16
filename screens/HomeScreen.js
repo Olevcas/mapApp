@@ -27,11 +27,11 @@ export default function HomeScreen() {
                 </View>
 
                 <ScrollView style={styles.scroll}>
-                    <TutorialCard number="1" header="Navigate to the Map Page to start filtering cities:" path={require("../videos/Tut1.mp4")}></TutorialCard>
-                    <TutorialCard number="2" header="Press the 'Show menu' button and set a radius:" path={require("../videos/Tut2.mp4")}></TutorialCard>
-                    <TutorialCard number="3" header="Confirm the radius, and let the map show the relevant cities:" path={require("../videos/Tut3.mp4")}></TutorialCard>
-                    <TutorialCard number="4" header="To get a list view of the cities, head over to the City List page:" path={require("../videos/Tut4.mp4")}></TutorialCard>
-                    <TutorialCard number="5" header="Filter based on population, distance, or even search:" path={require("../videos/Tut5.mp4")}></TutorialCard>
+                    <TutorialCard number="1" header="Navigate to the Map Page to start filtering cities:" path={require("../images/tutimages/tut1.jpeg")}></TutorialCard>
+                    <TutorialCard number="2" header="Press the 'Show menu' button and set a radius:" path={require("../images/tutimages/tut2.jpeg")}></TutorialCard>
+                    <TutorialCard number="3" header="Confirm the radius, and let the map show the relevant cities:" path={require("../images/tutimages/tut3.jpeg")}></TutorialCard>
+                    <TutorialCard number="4" header="To get a list view of the cities, head over to the City List page:" path={require("../images/tutimages/tut4.jpeg")}></TutorialCard>
+                    <TutorialCard number="5" header="Filter based on population, distance, or even search:" path={require("../images/tutimages/tut5.jpeg")}></TutorialCard>
 
                     <View style={styles.credz}>
                         <Text style={{ fontSize: 20, fontWeight: "bold", marginBottom: 5 }}>Made by:</Text>
