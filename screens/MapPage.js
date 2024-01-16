@@ -76,6 +76,7 @@ export default function MapPage() {
         return isPointWithinRadius(center, { latitude: cityLat, longitude: cityLng }, radius);
       });
     }
+    const formatter = Intl.NumberFormat("no", { notation: "compact" });
 
     const newMarkers = filteredCities.map((city) => ({
       key: city.coordinates.lat + Math.random() * 100,
@@ -84,7 +85,7 @@ export default function MapPage() {
         longitude: parseFloat(city.coordinates.lon),
       },
       title: city.name,
-      description: `Population: ${city.population}`,
+      description: `Population: ${formatter.format(city.population)}`,
 
     }));
     setMarkers(newMarkers);
